@@ -1,0 +1,15 @@
+server:
+  port: 9009
+  compression:
+    enabled: true
+    mime-types: application/json
+  servlet:
+    context-path: /api/v1/
+
+spring:
+  profiles:
+    active: TEST
+  application:
+    name: FSApi
+
+logging.pattern.console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %magenta([%t]) %m%n"
