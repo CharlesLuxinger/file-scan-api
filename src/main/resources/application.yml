@@ -7,9 +7,14 @@ server:
     context-path: /api/v1/
 
 spring:
-  profiles:
-    active: ${APP_ENV}
   application:
     name: FSApi
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    resolve-schema-properties: true
+  swagger-ui:
+    path: /
 
 logging.pattern.console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight(%-5level) %magenta([%t]) %m%n"

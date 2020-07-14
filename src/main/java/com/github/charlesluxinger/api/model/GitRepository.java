@@ -17,9 +17,9 @@ import javax.validation.constraints.Pattern;
 public class GitRepository {
 
 	@JsonIgnore
-	private final String GITHUB_URL_REGEX = "https://github\\.com/.*?\\.git";
+	private final String GITHUB_URL_REGEX = "(https://github\\.com/)\\b[-a-zA-Z0-9()@:%_.+~#?&/=]+";
 
-	@Schema(example = "https://github.com/CharlesLuxinger/file-scan-api.git")
+	@Schema(example = "https://github.com/CharlesLuxinger/file-scan-api")
 	@NotBlank
 	@Pattern(regexp = GITHUB_URL_REGEX)
 	private String url;
