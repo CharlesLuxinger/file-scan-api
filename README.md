@@ -1,13 +1,17 @@
 # File Scan API
 
-A test project with the objective of checking some Github repository and returning the number of files and the number of lines per group of files.
+A test project with the objective of checking some Github repository and returning the number of bits and number of lines per group of type files.
 
 ## Running Api
    
-   Make sure Docker and Docker Compose are installed on your computer, and running:
+   Make sure Docker and Docker Compose are installed on your computer.
+   
+    docker run -d --name api.fs.dev -p 9009:9009 charlesluxinger/file-scan-api
 
+   If you prefer run the local project, run at root project directory: 
+   
     docker-compose up -d
-    
+      
    The Api Swagger is available in:
 
     http://localhost:9009/api/v1/
@@ -22,7 +26,7 @@ A test project with the objective of checking some Github repository and returni
         "url": "https://github.com/CharlesLuxinger/file-scan-api"
     }
     
-   Response payload:
+   Success Response payload:
    
     [
         {
