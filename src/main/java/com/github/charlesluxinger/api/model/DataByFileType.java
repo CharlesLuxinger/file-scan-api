@@ -17,7 +17,7 @@ import static com.github.charlesluxinger.api.model.UrlParts.BLOB_PATH;
 @AllArgsConstructor
 public class DataByFileType {
 
-	@Schema(example = "https://github.com/CharlesLuxinger/file-scan-api")
+	@Schema(example = "txt")
 	@NotBlank
 	@EqualsAndHashCode.Include
 	private String fileType;

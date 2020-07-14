@@ -23,7 +23,7 @@ public interface FileScanController {
 			@ApiResponse(responseCode = "400", description = "Incorrect Payload",
 						 content = @Content(schema =  @Schema(implementation = ApiExceptionResponse.class),
 						 mediaType = "application/json")),
-			@ApiResponse(responseCode = "500", description = "Server Error or Fraud Validation.",
+			@ApiResponse(responseCode = "500", description = "Server Error",
 						 content = @Content(schema =  @Schema(implementation = ApiExceptionResponse.class),
 						 mediaType = "application/json"))
 	})
