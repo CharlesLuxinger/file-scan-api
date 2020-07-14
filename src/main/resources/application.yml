@@ -1,5 +1,5 @@
 server:
-  port: 9009
+  port: $PORT
   compression:
     enabled: true
     mime-types: application/json
