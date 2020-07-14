@@ -98,6 +98,9 @@
 				<groupId>com.heroku.sdk</groupId>
 				<artifactId>heroku-maven-plugin</artifactId>
 				<version>3.0.3</version>
+				<configuration>
+					<jdkVersion>14</jdkVersion>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
