@@ -6,7 +6,7 @@ A test project with the objective of checking some Github repository and returni
    
    Make sure Docker and Docker Compose are installed on your computer.
    
-    docker run -d --name api.fs.dev -p 9009:9009 -e PORT=9009 charlesluxinger/file-scan-api
+    docker run -d --name api.fs.dev -p 9009:9009 charlesluxinger/file-scan-api
 
    If you prefer run the local project, run at root project directory: 
    
