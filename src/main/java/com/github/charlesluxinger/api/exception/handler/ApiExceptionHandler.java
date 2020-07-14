@@ -1,6 +1,8 @@
 package com.github.charlesluxinger.api.exception.handler;
 
 import com.github.charlesluxinger.api.exception.ApiExceptionResponse;
+import com.github.charlesluxinger.api.exception.NonHTMLPageException;
+import com.github.charlesluxinger.api.exception.UnformedURLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,13 +17,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Arrays;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Slf4j
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @Override
+	private final String defaultMessage = "An unexpected internal system error has occurred. Try again and if the problem persists, contact your system administrator.";
+
+	@Override
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
         if (body == null) {
             var detail = "An unexpected internal server error has occurred. Try again and if the problem persists, contact your system administrator.";
@@ -40,17 +45,45 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return this.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
     }
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(NonHTMLPageException.class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
+    public ResponseEntity<Object> handleNonHTMLPageException(Exception ex, WebRequest request) {
         var status = INTERNAL_SERVER_ERROR;
-        var detail = "An unexpected internal system error has occurred. Try again and if the problem persists, contact your system administrator.";
-        var body = exceptionResponseBuilder(detail, status, request);
+        var body = exceptionResponseBuilder(defaultMessage, status, request);
+
+        if (ex.getCause().getMessage().contains("429")) {
+            status = BAD_REQUEST;
+            body = exceptionResponseBuilder("Sorry, but Github is smarter than us: ***429*** Too many requests are not allowed, please try again later or another URL repository.", BAD_REQUEST, request);
+        }
 
         logger.error(Arrays.toString(ex.getStackTrace()));
 
         return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
     }
+
+    @ExceptionHandler(UnformedURLException.class)
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Object> handleUnformedURLException(Exception ex, WebRequest request) {
+        var status = INTERNAL_SERVER_ERROR;
+        var body = exceptionResponseBuilder(defaultMessage, status, request);
+
+        logger.error(Arrays.toString(ex.getStackTrace()));
+
+        return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(INTERNAL_SERVER_ERROR)
+    public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
+        var status = INTERNAL_SERVER_ERROR;
+        var body = exceptionResponseBuilder(defaultMessage, status, request);
+
+        logger.error(Arrays.toString(ex.getStackTrace()));
+
+        return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+    }
+
+
 
     private ApiExceptionResponse exceptionResponseBuilder(String detail, HttpStatus status, WebRequest request) {
         return ApiExceptionResponse.builder()
