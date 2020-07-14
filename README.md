@@ -6,7 +6,7 @@ A test project with the objective of checking some Github repository and returni
    
    Make sure Docker and Docker Compose are installed on your computer.
    
-    docker run -d --name api.fs.dev -p 9009:9009 charlesluxinger/file-scan-api
+    docker run -d -p 9009:9009 charlesluxinger/file-scan-api
 
    If you prefer run the local project, run at root project directory: 
    
@@ -15,11 +15,13 @@ A test project with the objective of checking some Github repository and returni
    The Api Swagger is available in:
 
     http://localhost:9009/api/v1
+    
     http://file-scan-api.herokuapp.com/api/v1
     
    Endpoint test is available in:
     
     http://localhost:9009/api/v1/repository
+    
     http://file-scan-api.herokuapp.com/api/v1/repository
    
    Request body:
