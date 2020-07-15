@@ -4,15 +4,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 
 import static com.github.charlesluxinger.api.model.UrlParts.BLOB_PATH;
 
 @Getter
-@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @AllArgsConstructor
 public class DataByFileType {
@@ -20,7 +19,7 @@ public class DataByFileType {
 	@Schema(example = "txt")
 	@NotBlank
 	@EqualsAndHashCode.Include
-	private String fileType;
+	private final String fileType;
 
 	@Schema(example = "1")
 	@PositiveOrZero
@@ -36,7 +35,7 @@ public class DataByFileType {
 
 	public static String getFileType(final String url) {
 		if (!url.contains(BLOB_PATH)){
-			throw new IllegalArgumentException("Should a valid file URL");
+			throw new IllegalArgumentException("Should set a valid file URL: " + url);
 		}
 
 		var file = url.substring(url.lastIndexOf('/') + 1);
@@ -47,4 +46,10 @@ public class DataByFileType {
 
 		return file;
 	}
+
+	public void sumValues(@NotNull DataByFileType newData) {
+		this.bytes += newData.getBytes();
+		this.lines += newData.getLines();
+	}
+
 }

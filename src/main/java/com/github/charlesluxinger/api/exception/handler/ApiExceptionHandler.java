@@ -3,6 +3,7 @@ package com.github.charlesluxinger.api.exception.handler;
 import com.github.charlesluxinger.api.exception.ApiExceptionResponse;
 import com.github.charlesluxinger.api.exception.NonHTMLPageException;
 import com.github.charlesluxinger.api.exception.UnformedURLException;
+import com.github.charlesluxinger.api.exception.NotValidURLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -45,9 +46,17 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return this.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
     }
 
+    @ExceptionHandler(NotValidURLException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ResponseEntity<Object> handleNotValidURLException(NotValidURLException ex, WebRequest request) {
+        var body = exceptionResponseBuilder(ex.getMessage(), BAD_REQUEST, request);
+
+        return handleExceptionInternal(ex, body, new HttpHeaders(), BAD_REQUEST, request);
+    }
+
     @ExceptionHandler(NonHTMLPageException.class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Object> handleNonHTMLPageException(Exception ex, WebRequest request) {
+    public ResponseEntity<Object> handleNonHTMLPageException(NonHTMLPageException ex, WebRequest request) {
         var status = INTERNAL_SERVER_ERROR;
         var body = exceptionResponseBuilder(defaultMessage, status, request);
 
@@ -63,7 +72,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(UnformedURLException.class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Object> handleUnformedURLException(Exception ex, WebRequest request) {
+    public ResponseEntity<Object> handleUnformedURLException(UnformedURLException ex, WebRequest request) {
         var status = INTERNAL_SERVER_ERROR;
         var body = exceptionResponseBuilder(defaultMessage, status, request);
 
