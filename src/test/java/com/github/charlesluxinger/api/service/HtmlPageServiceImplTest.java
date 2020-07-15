@@ -33,7 +33,7 @@ class HtmlPageServiceImplTest {
 	@InjectMocks
 	private HtmlPageServiceImpl service;
 
-	private final String gitHubUrlWithPath = "https://github.com/CharlesLuxinger/file-scan-api";
+	private final String gitHubUrlWithPath = "https://github.com/CharlesLuxinger/Dart";
 	private final String gitHubUrl = "https://github.com";
 
 
@@ -42,7 +42,7 @@ class HtmlPageServiceImplTest {
 	public void should_return_a_path_from_url_getPath(){
 		var path = service.getPath(gitHubUrlWithPath);
 
-		assertEquals(path, "/CharlesLuxinger/file-scan-api");
+		assertEquals(path, "/CharlesLuxinger/Dart");
 	}
 
 	@Test
@@ -58,7 +58,7 @@ class HtmlPageServiceImplTest {
 	@Test
 	@DisplayName("should return an url")
 	public void should_return_a_complete_github_url_getURL(){
-		var path = "/CharlesLuxinger/file-scan-api";
+		var path = "/CharlesLuxinger/Dart";
 		var url = service.getUrl(path);
 
 		assertTrue(url instanceof URL);

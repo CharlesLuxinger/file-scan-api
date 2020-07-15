@@ -1,3 +1,4 @@
+![Continuos Integration](https://github.com/CharlesLuxinger/file-scan-api/workflows/Continuos%20Integration/badge.svg)
 # File Scan API
 
 A test project with the objective of checking some Github repository and returning the number of bits and number of lines per group of type files.
