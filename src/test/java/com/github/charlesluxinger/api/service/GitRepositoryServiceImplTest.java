@@ -9,8 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -56,17 +54,5 @@ class GitRepositoryServiceImplTest {
 	@DisplayName("should return true when url not contains tree path")
 	public void should_return_false_when_url_not_contains_tree_path_isACloneRepositoryUrl() {
 		assertFalse(service.isDirectoryPath("https://github.com/CharlesLuxinger/Dart/blob/master/folder"));
-	}
-
-
-
-	protected Set<String> getPathsFilesByRootDirectory(final Set<String> treeFiles, final String url) {
-		var pathsFromRoot = htmlPageService.getPathsByHTMLPage(url);
-
-		treeFiles.addAll(pathsFromRoot);
-
-		getFilesPathByChildDirectories(treeFiles, url, pathsFromRoot);
-
-		return treeFiles;
 	}
 }
