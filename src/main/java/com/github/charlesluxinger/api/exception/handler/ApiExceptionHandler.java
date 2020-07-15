@@ -2,8 +2,8 @@ package com.github.charlesluxinger.api.exception.handler;
 
 import com.github.charlesluxinger.api.exception.ApiExceptionResponse;
 import com.github.charlesluxinger.api.exception.NonHTMLPageException;
-import com.github.charlesluxinger.api.exception.UnformedURLException;
 import com.github.charlesluxinger.api.exception.NotValidURLException;
+import com.github.charlesluxinger.api.exception.UnformedURLException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

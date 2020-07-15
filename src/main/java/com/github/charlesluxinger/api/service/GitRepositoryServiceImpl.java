@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -35,8 +36,9 @@ public class GitRepositoryServiceImpl implements GitRepositoryService {
 	private final RegexPatternService regexService;
 	private final NumberUtils numberUtils;
 
+	@Valid
 	@Cacheable(value = CACHE_NAME, key = "#repository.url")
-	public Set<DataByFileType> findAllFilesGroup(@NotNull final GitRepository repository) {
+	public Set<DataByFileType> findAllFilesGroup(@Valid @NotNull final GitRepository repository) {
 		log.info("Finding in: " + repository.getUrl());
 
 		isACloneRepositoryUrl(repository.getUrl());
