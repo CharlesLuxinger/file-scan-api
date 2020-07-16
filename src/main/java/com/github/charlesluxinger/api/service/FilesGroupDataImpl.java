@@ -14,7 +14,7 @@ import static java.util.Collections.synchronizedSet;
 @Validated
 public class FilesGroupDataImpl implements FilesGroupData {
 
-	protected final Set<DataByFileType> filesGroupData = synchronizedSet(new HashSet<>());
+	protected Set<DataByFileType> filesGroupData;
 
 	public Set<DataByFileType> addFileGroup(@NotNull final DataByFileType newData) {
 		if (filesGroupData.contains(newData)){
@@ -29,6 +29,9 @@ public class FilesGroupDataImpl implements FilesGroupData {
 		filesGroupData.add(newData);
 
 		return filesGroupData;
+	}
 
+	public void newFilesGroupDataList(){
+		filesGroupData  = synchronizedSet(new HashSet<>());
 	}
 }
