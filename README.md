@@ -3,35 +3,43 @@
 
 A test project with the objective of checking some Github repository and returning the number of bits and number of lines per group of type files.
 
-## Running Api
+## Testing Api
    
-   Make sure Docker and Docker Compose are installed on your computer.
+   There are 2 access options Heroku Server or run local.
    
-    docker run -d -p 9009:9009 charlesluxinger/file-scan-api
+   * Heroku Server
+   
+   The Api Swagger is available in:
+   
+       http://file-scan-api.herokuapp.com/api/v1
+       
+   Endpoint test is available in:
+       
+       http://file-scan-api.herokuapp.com/api/v1/repository
+       
+   * Run local
+   
+   If you prefer run local project make sure that Docker and Docker Compose are installed on your computer, run in the root project:
 
-   If you prefer run the local project, run at root project directory: 
-   
     docker-compose up -d
       
    The Api Swagger is available in:
 
     http://localhost:9009/api/v1
     
-    http://file-scan-api.herokuapp.com/api/v1
-    
    Endpoint test is available in:
     
     http://localhost:9009/api/v1/repository
-    
-    http://file-scan-api.herokuapp.com/api/v1/repository
+
+## Schema
    
-   Request body:
+   * Request body:
    
     {
         "url": "https://github.com/CharlesLuxinger/file-scan-api"
     }
     
-   Success Response payload:
+   * Success Response payload:
    
     [
         {
@@ -41,7 +49,7 @@ A test project with the objective of checking some Github repository and returni
         }
     ]
     
-   Error Response payload:
+   * Error Response payload:
    
     {
         "path": "/api/v1/resource/1"

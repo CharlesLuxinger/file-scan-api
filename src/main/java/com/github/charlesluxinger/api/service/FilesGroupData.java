@@ -9,4 +9,6 @@ public interface FilesGroupData {
 
 	Set<DataByFileType> addFileGroup(@NotNull final DataByFileType newData);
 
+	void newFilesGroupDataList();
+
 }

@@ -20,6 +20,7 @@ class FilesGroupDataImplTest {
 	@Test
 	@DisplayName("when add a file type that not existed should only add")
 	public void when_add_a_file_type_that_not_existed_should_only_add_addFileGroup(){
+		filesGroupData.newFilesGroupDataList();
 		var newData = new DataByFileType("java", 4, 7);
 		var oldData = new DataByFileType("go", 9, 4);
 
@@ -37,6 +38,7 @@ class FilesGroupDataImplTest {
 	@Test
 	@DisplayName("when add a file type that not existed sum values add")
 	public void when_add_a_file_type_that_existed_should_sum_values_addFileGroup(){
+		filesGroupData.newFilesGroupDataList();
 		var newData = new DataByFileType("java", 4, 7);
 		var oldData = new DataByFileType("java", 9, 4);
 

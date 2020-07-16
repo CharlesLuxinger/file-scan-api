@@ -53,6 +53,8 @@ public class GitRepositoryServiceImpl implements GitRepositoryService {
 	}
 
 	protected Set<DataByFileType> getFileDataGroup(final String url) {
+		filesGroupData.newFilesGroupDataList();
+
 		return getDataByFilesExtensions(url).stream()
 											.map(filesGroupData::addFileGroup)
 											.flatMap(Set::stream)

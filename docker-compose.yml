@@ -3,8 +3,6 @@ version: '3.7'
 services:
   api.fs.dev:
     container_name: api.fs.dev
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: charlesluxinger/file-scan-api
     ports:
       - 9009:9009
