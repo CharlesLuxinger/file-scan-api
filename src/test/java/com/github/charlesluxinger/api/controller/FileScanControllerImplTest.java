@@ -63,7 +63,7 @@ class FileScanControllerImplTest {
 			.then()
 				.body("status", is(400))
 				.body("title", equalTo("Bad Request"))
-				.body("detail", equalTo("One or more fields are invalid. Fill in correctly and try again."))
+				.body("detail", equalTo("Is not a valid github url: " + url))
 				.body("path", equalTo("/api/v1/repository"))
 				.body("timestamp", notNullValue());
 	}
@@ -104,6 +104,26 @@ class FileScanControllerImplTest {
 				.body("status", is(400))
 				.body("title", equalTo("Bad Request"))
 				.body("detail", equalTo("One or more fields are invalid. Fill in correctly and try again."))
+				.body("path", equalTo("/api/v1/repository"))
+				.body("timestamp", notNullValue());
+	}
+
+	@Test
+	@DisplayName("should return 404 not found with not existed git url")
+	public void should_return_200_not_found_with_not_existed_git_url_gitRepository() {
+		var url = "https://github.com/CharlesLuxinger/Dartd";
+
+		given()
+				.contentType(ContentType.JSON)
+				.body(new GitRepository(url))
+			.expect()
+				.statusCode(404)
+			.when()
+				.post()
+			.then()
+				.body("status", is(404))
+				.body("title", equalTo("Not Found"))
+				.body("detail", equalTo("Repository not found."))
 				.body("path", equalTo("/api/v1/repository"))
 				.body("timestamp", notNullValue());
 	}

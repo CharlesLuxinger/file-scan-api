@@ -16,10 +16,13 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ValidationException;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Slf4j
 @ControllerAdvice
@@ -46,12 +49,16 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return this.handleExceptionInternal(ex, response, new HttpHeaders(), status, request);
     }
 
-    @ExceptionHandler(NotValidURLException.class)
+    @ExceptionHandler(ValidationException.class)
     @ResponseStatus(BAD_REQUEST)
-    public ResponseEntity<Object> handleNotValidURLException(NotValidURLException ex, WebRequest request) {
-        var body = exceptionResponseBuilder(ex.getMessage(), BAD_REQUEST, request);
+    public ResponseEntity<Object> handleValidationException(ValidationException ex, WebRequest request) {
+	    if (ex.getCause() instanceof NotValidURLException){
+            var body = exceptionResponseBuilder(ex.getCause().getMessage(), BAD_REQUEST, request);
+            return handleExceptionInternal(ex, body, new HttpHeaders(), BAD_REQUEST, request);
+        }
 
-        return handleExceptionInternal(ex, body, new HttpHeaders(), BAD_REQUEST, request);
+        var body = exceptionResponseBuilder(defaultMessage, INTERNAL_SERVER_ERROR, request);
+        return handleExceptionInternal(ex, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
     }
 
     @ExceptionHandler(NonHTMLPageException.class)
@@ -63,6 +70,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         if (ex.getCause().getMessage().contains("429")) {
             status = BAD_REQUEST;
             body = exceptionResponseBuilder("Sorry, but Github is smarter than us: ***429*** Too many requests are not allowed, please try again later or another URL repository.", BAD_REQUEST, request);
+            return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
+        }
+
+        if (ex.getCause() instanceof FileNotFoundException) {
+            status = NOT_FOUND;
+            body = exceptionResponseBuilder("Repository not found.", NOT_FOUND, request);
+            return handleExceptionInternal(ex, body, new HttpHeaders(), status, request);
         }
 
         logger.error(Arrays.toString(ex.getStackTrace()));

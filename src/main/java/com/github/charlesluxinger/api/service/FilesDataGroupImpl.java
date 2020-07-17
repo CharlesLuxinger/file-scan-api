@@ -12,7 +12,7 @@ import static java.util.Collections.synchronizedSet;
 
 @Service
 @Validated
-public class FilesGroupDataImpl implements FilesGroupData {
+public class FilesDataGroupImpl implements FilesDataGroup {
 
 	protected Set<DataByFileType> filesGroupData;
 
@@ -31,7 +31,7 @@ public class FilesGroupDataImpl implements FilesGroupData {
 		return filesGroupData;
 	}
 
-	public void newFilesGroupDataList(){
+	public void newFilesDataGroupSet(){
 		filesGroupData  = synchronizedSet(new HashSet<>());
 	}
 }

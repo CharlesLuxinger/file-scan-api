@@ -11,6 +11,6 @@ public class RegexPattern {
 	public final static String LINE_QUANTITY_REGEX = NUMBER_REGEX + "\\s+lines";
 	public final static String LINE_REGEX = LINE_QUANTITY_REGEX + OR + BYTES_QUANTITY_REGEX + OR + K_BYTES_QUANTITY_REGEX;
 	public final static String PATH_REGEX = "[A-Za-z0-9.-_-]+";
-
+	public final static String GITHUB_URL_REGEX = "(https://github\\.com/)\\b[-a-zA-Z0-9()@:%_.+~#?&/=]+";
 
 }

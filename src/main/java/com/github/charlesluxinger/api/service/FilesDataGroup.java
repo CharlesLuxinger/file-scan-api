@@ -5,10 +5,10 @@ import com.github.charlesluxinger.api.model.DataByFileType;
 import javax.validation.constraints.NotNull;
 import java.util.Set;
 
-public interface FilesGroupData {
+public interface FilesDataGroup {
 
 	Set<DataByFileType> addFileGroup(@NotNull final DataByFileType newData);
 
-	void newFilesGroupDataList();
+	void newFilesDataGroupSet();
 
 }

@@ -1,6 +1,5 @@
 package com.github.charlesluxinger.api.service;
 
-import com.github.charlesluxinger.api.exception.NotValidURLException;
 import com.github.charlesluxinger.api.model.DataByFileType;
 import com.github.charlesluxinger.api.model.GitRepository;
 import com.github.charlesluxinger.api.util.NumberUtils;
@@ -15,7 +14,6 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +29,7 @@ import static java.util.Collections.synchronizedSet;
 @Validated
 public class GitRepositoryServiceImpl implements GitRepositoryService {
 
-	private final FilesGroupData filesGroupData;
+	private final FilesDataGroup filesDataGroup;
 	private final HtmlPageService htmlPageService;
 	private final RegexPatternService regexService;
 	private final NumberUtils numberUtils;
@@ -41,32 +39,18 @@ public class GitRepositoryServiceImpl implements GitRepositoryService {
 	public Set<DataByFileType> findAllFilesGroup(@Valid @NotNull final GitRepository repository) {
 		log.info("Finding in: " + repository.getUrl());
 
-		isACloneRepositoryUrl(repository.getUrl());
-
-		return getFileDataGroup(repository.getUrl());
+		return getFilesDataGroup(repository.getUrl());
 	}
 
-	protected void isACloneRepositoryUrl(@NotBlank final String url) {
-		if (url.endsWith(".git")) {
-			throw new NotValidURLException("Is not a valid github url: " + url);
-		}
-	}
+	protected Set<DataByFileType> getFilesDataGroup(final String url) {
+		filesDataGroup.newFilesDataGroupSet();
 
-	protected Set<DataByFileType> getFileDataGroup(final String url) {
-		filesGroupData.newFilesGroupDataList();
-
-		return getDataByFilesExtensions(url).stream()
-											.map(filesGroupData::addFileGroup)
-											.flatMap(Set::stream)
-											.collect(Collectors.toSet());
-	}
-
-	protected List<DataByFileType> getDataByFilesExtensions(final String url) {
-		return getPathsFilesByRootDirectory(synchronizedSet(new HashSet<>()), url)
-				.parallelStream()
-				.map(url::concat)
-				.map(this::getDataByFileType)
-				.collect(Collectors.toList());
+		return getPathsFilesByRootDirectory(synchronizedSet(new HashSet<>()), url).parallelStream()
+																				  .map(url::concat)
+																				  .map(this::getDataByFileType)
+																				  .map(filesDataGroup::addFileGroup)
+																				  .flatMap(Set::stream)
+																				  .collect(Collectors.toSet());
 	}
 
 	protected Set<String> getPathsFilesByRootDirectory(final Set<String> treeFiles, final String url) {
