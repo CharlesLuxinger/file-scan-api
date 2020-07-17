@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  api.fs.dev:
-    container_name: api.fs.dev
+  api.file-scan.dev:
+    container_name: api.file-scan.dev
     image: charlesluxinger/file-scan-api
     ports:
       - 9009:9009
