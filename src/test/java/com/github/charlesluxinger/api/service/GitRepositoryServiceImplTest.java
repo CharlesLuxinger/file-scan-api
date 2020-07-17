@@ -1,6 +1,5 @@
 package com.github.charlesluxinger.api.service;
 
-import com.github.charlesluxinger.api.exception.NotValidURLException;
 import com.github.charlesluxinger.api.util.NumberUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,16 +8,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class GitRepositoryServiceImplTest {
 
 	@Mock
-	private FilesGroupDataImpl filesGroupData;
+	private FilesDataGroupImpl filesGroupData;
 
 	@Mock
 	private HtmlPageService htmlPageService;
@@ -31,18 +28,6 @@ class GitRepositoryServiceImplTest {
 
 	@InjectMocks
 	private GitRepositoryServiceImpl service;
-
-	@Test
-	@DisplayName("should throw an exception when url ends with .git")
-	public void should_throw_an_exception_when_url_ends_with_dot_git_isACloneRepositoryUrl() {
-		assertThrows(NotValidURLException.class, () -> service.isACloneRepositoryUrl("https://github.com/CharlesLuxinger/Dart.git"));
-	}
-
-	@Test
-	@DisplayName("should throw an exception when url ends with .git")
-	public void should_not_throw_an_exception_when_url_not_ends_with_dot_git_isACloneRepositoryUrl() {
-		assertDoesNotThrow(() -> service.isACloneRepositoryUrl("https://github.com/CharlesLuxinger/Dart"));
-	}
 
 	@Test
 	@DisplayName("should return true when url contains tree path")

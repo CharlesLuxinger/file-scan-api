@@ -8,11 +8,13 @@ import java.util.regex.Pattern;
 import static com.github.charlesluxinger.api.model.RegexPattern.BYTES_QUANTITY_REGEX;
 import static com.github.charlesluxinger.api.model.RegexPattern.BYTES_QUANTITY_REGEX_OR_K_BYTES_QUANTITY_REGEX;
 import static com.github.charlesluxinger.api.model.RegexPattern.DOUBLE_REGEX;
+import static com.github.charlesluxinger.api.model.RegexPattern.GITHUB_URL_REGEX;
 import static com.github.charlesluxinger.api.model.RegexPattern.K_BYTES_QUANTITY_REGEX;
 import static com.github.charlesluxinger.api.model.RegexPattern.LINE_QUANTITY_REGEX;
 import static com.github.charlesluxinger.api.model.RegexPattern.LINE_REGEX;
 import static com.github.charlesluxinger.api.model.RegexPattern.NUMBER_REGEX;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RegexPatternTest {
 
@@ -104,6 +106,24 @@ class RegexPatternTest {
 		var expected = getMatcher(LINE_REGEX, text);
 
 		assertEquals(expected, "12.5 KB");
+	}
+
+	@Test
+	@DisplayName("should capture a valid github url")
+	public void should_capture_a_valid_github_url_GITHUB_URL_REGEX() {
+		var text = "https://github.com/CharlesLuxinger/Dart";
+		var expected = getMatcher(GITHUB_URL_REGEX, text);
+
+		assertEquals(expected, text);
+	}
+
+	@Test
+	@DisplayName("should return blank an invalid github url")
+	public void should_return_blank_an_invalid_github_url_GITHUB_URL_REGEX() {
+		var text = "https://invalid.com/CharlesLuxinger/Dart";
+		var expected = getMatcher(GITHUB_URL_REGEX, text);
+
+		assertTrue(expected.isBlank());
 	}
 
 	private String getMatcher(String regex, String text) {
