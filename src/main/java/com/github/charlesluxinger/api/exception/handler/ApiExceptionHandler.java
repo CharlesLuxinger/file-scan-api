@@ -1,7 +1,7 @@
 package com.github.charlesluxinger.api.exception.handler;
 
 import com.github.charlesluxinger.api.exception.ApiExceptionResponse;
-import com.github.charlesluxinger.api.exception.NonHTMLPageException;
+import com.github.charlesluxinger.api.exception.NotHTMLPageException;
 import com.github.charlesluxinger.api.exception.NotValidURLException;
 import com.github.charlesluxinger.api.exception.UnformedURLException;
 import lombok.extern.slf4j.Slf4j;
@@ -61,9 +61,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
     }
 
-    @ExceptionHandler(NonHTMLPageException.class)
+    @ExceptionHandler(NotHTMLPageException.class)
     @ResponseStatus(INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Object> handleNonHTMLPageException(NonHTMLPageException ex, WebRequest request) {
+    public ResponseEntity<Object> handleNotHTMLPageException(NotHTMLPageException ex, WebRequest request) {
         var status = INTERNAL_SERVER_ERROR;
         var body = exceptionResponseBuilder(defaultMessage, status, request);
 

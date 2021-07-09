@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({METHOD, FIELD, PARAMETER, TYPE_USE})
 @Documented
 @Constraint(validatedBy = GithubUrlValidator.class)
-public @interface GithubUrl {
+public @interface GitHubUrl {
 	String message() default "must match Github Pattern";
 
 	Class<?>[] groups() default { };
@@ -27,7 +27,7 @@ public @interface GithubUrl {
 	@Retention(RUNTIME)
 	@Documented
 	@interface List {
-		GithubUrl[] value();
+		GitHubUrl[] value();
 	}
 
 }

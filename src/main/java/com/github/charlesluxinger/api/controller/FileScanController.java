@@ -2,7 +2,7 @@ package com.github.charlesluxinger.api.controller;
 
 import com.github.charlesluxinger.api.exception.ApiExceptionResponse;
 import com.github.charlesluxinger.api.model.DataByFileType;
-import com.github.charlesluxinger.api.model.GitRepository;
+import com.github.charlesluxinger.api.model.GitRepositoryRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -29,7 +29,7 @@ public interface FileScanController {
 	})
 	Set<DataByFileType> gitRepository(@Parameter(description = "An object with url parameter",
 											required = true,
-											schema = @Schema(implementation = GitRepository.class, oneOf = GitRepository.class))
-	                             final GitRepository repository);
+											schema = @Schema(implementation = GitRepositoryRequest.class, oneOf = GitRepositoryRequest.class))
+									  final GitRepositoryRequest repository);
 
 }

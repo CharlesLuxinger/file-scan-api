@@ -1,6 +1,6 @@
 package com.github.charlesluxinger.api.controller;
 
-import com.github.charlesluxinger.api.model.GitRepository;
+import com.github.charlesluxinger.api.model.GitRepositoryRequest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +36,7 @@ class FileScanControllerImplTest {
 
 		given()
 				.contentType(ContentType.JSON)
-				.body(new GitRepository(url))
+				.body(new GitRepositoryRequest(url))
 			.expect()
 				.statusCode(200)
 			.when()
@@ -55,7 +55,7 @@ class FileScanControllerImplTest {
 
 		given()
 				.contentType(ContentType.JSON)
-				.body(new GitRepository(url))
+				.body(new GitRepositoryRequest(url))
 			.expect()
 				.statusCode(400)
 			.when()
@@ -75,7 +75,7 @@ class FileScanControllerImplTest {
 
 		given()
 				.contentType(ContentType.JSON)
-				.body(new GitRepository(url))
+				.body(new GitRepositoryRequest(url))
 			.expect()
 				.statusCode(400)
 			.when()
@@ -115,7 +115,7 @@ class FileScanControllerImplTest {
 
 		given()
 				.contentType(ContentType.JSON)
-				.body(new GitRepository(url))
+				.body(new GitRepositoryRequest(url))
 			.expect()
 				.statusCode(404)
 			.when()

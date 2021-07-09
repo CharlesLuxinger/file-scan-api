@@ -1,6 +1,6 @@
 package com.github.charlesluxinger.api.service;
 
-import com.github.charlesluxinger.api.exception.NonHTMLPageException;
+import com.github.charlesluxinger.api.exception.NotHTMLPageException;
 import com.github.charlesluxinger.api.exception.UnformedURLException;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -48,7 +48,7 @@ public class HtmlPageServiceImpl implements HtmlPageService {
 			var conn = getUrl(url).openConnection();
 			return new BufferedReader(new InputStreamReader(conn.getInputStream()));
 		} catch (IOException e) {
-			throw new NonHTMLPageException("Some wrong with url: " + url, e);//TODO Catch Exception
+			throw new NotHTMLPageException("Some wrong with url: " + url, e);//TODO Catch Exception
 		}
 	}
 

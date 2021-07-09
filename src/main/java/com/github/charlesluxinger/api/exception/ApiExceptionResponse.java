@@ -10,6 +10,8 @@ import javax.validation.constraints.NotNull;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 
+import static java.time.OffsetDateTime.now;
+
 /**
  * ApiExceptionResponse
  */
@@ -36,6 +38,6 @@ public class ApiExceptionResponse {
 
     @Schema(example = "2020-04-24T19:27:01.718Z")
     @NotNull
-    private final OffsetDateTime timestamp = OffsetDateTime.now().truncatedTo(ChronoUnit.SECONDS);
+    private final OffsetDateTime timestamp = now().truncatedTo(ChronoUnit.SECONDS);
 
 }

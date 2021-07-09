@@ -1,6 +1,6 @@
 package com.github.charlesluxinger.api.service;
 
-import com.github.charlesluxinger.api.exception.NonHTMLPageException;
+import com.github.charlesluxinger.api.exception.NotHTMLPageException;
 import com.github.charlesluxinger.api.exception.UnformedURLException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -125,9 +125,9 @@ class HtmlPageServiceImplTest {
 	public void should_throw_an_exception_when_there_is_something_wrong_getHTMLPageByURL(){
 		var mockService = mock(HtmlPageServiceImpl.class);
 
-		when(mockService.getHTMLPageByURL(gitHubUrl)).thenThrow(NonHTMLPageException.class);
+		when(mockService.getHTMLPageByURL(gitHubUrl)).thenThrow(NotHTMLPageException.class);
 
-		assertThrows(NonHTMLPageException.class, () -> mockService.getHTMLPageByURL(gitHubUrl));
+		assertThrows(NotHTMLPageException.class, () -> mockService.getHTMLPageByURL(gitHubUrl));
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.github.charlesluxinger.api.service;
 
 import com.github.charlesluxinger.api.model.DataByFileType;
-import com.github.charlesluxinger.api.model.GitRepository;
+import com.github.charlesluxinger.api.model.GitRepositoryRequest;
 import com.github.charlesluxinger.api.util.NumberUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +36,7 @@ public class GitRepositoryServiceImpl implements GitRepositoryService {
 
 	@Valid
 	@Cacheable(value = CACHE_NAME, key = "#repository.url")
-	public Set<DataByFileType> findAllFilesGroup(@Valid @NotNull final GitRepository repository) {
+	public Set<DataByFileType> findAllFilesGroup(@Valid @NotNull final GitRepositoryRequest repository) {
 		log.info("Finding in: " + repository.getUrl());
 
 		return getFilesDataGroup(repository.getUrl());
@@ -65,7 +65,7 @@ public class GitRepositoryServiceImpl implements GitRepositoryService {
 
 	protected void getFilesPathByChildDirectories(final Set<String> treeFiles, final String url, Set<String> pathsFromRoot) {
 		var userNameAndRepoName = htmlPageService.getPath(url);
-		boolean containsTreePath = treeFiles.parallelStream().anyMatch(p -> p.contains(TREE_PATH));
+		var containsTreePath = treeFiles.parallelStream().anyMatch(p -> p.contains(TREE_PATH));
 
 		while (containsTreePath) {
 			var childPaths = new HashSet<String>();
