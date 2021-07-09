@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -59,6 +60,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
         var body = exceptionResponseBuilder(defaultMessage, INTERNAL_SERVER_ERROR, request);
         return handleExceptionInternal(ex, body, new HttpHeaders(), INTERNAL_SERVER_ERROR, request);
+    }
+
+    @ExceptionHandler(HttpClientErrorException.NotFound.class)
+    @ResponseStatus(NOT_FOUND)
+    public ResponseEntity<Object> handleHttpClientErrorExceptionNotFound(HttpClientErrorException.NotFound ex, WebRequest request) {
+        var body = exceptionResponseBuilder("Repository not found.", NOT_FOUND, request);
+        return handleExceptionInternal(ex, body, new HttpHeaders(), NOT_FOUND, request);
     }
 
     @ExceptionHandler(NotHTMLPageException.class)

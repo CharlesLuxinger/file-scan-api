@@ -8,9 +8,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
@@ -27,6 +29,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class HtmlPageServiceImplTest {
 
+	@Mock
+	private RestTemplate restTemplate;
 	@Mock
 	private RegexPatternService regexService;
 
@@ -101,7 +105,8 @@ class HtmlPageServiceImplTest {
 
 	@Test
 	@DisplayName("should return non null buffer read")
-	public void should_return_non_null_buffer_read_getHTMLPageByURL() throws IOException {
+	public void should_return_non_null_buffer_read_getHTMLPageByURL() throws Exception {
+		when(restTemplate.getForObject(new URL(gitHubUrl).toURI(), String.class)).thenReturn("String");
 		var page = service.getHTMLPageByURL(gitHubUrl);
 
 		assertTrue(page instanceof BufferedReader);
@@ -112,7 +117,9 @@ class HtmlPageServiceImplTest {
 
 	@Test
 	@DisplayName("should return a set with paths")
-	public void should_return_a_set_with_paths_getPathsByHTMLPage() throws IOException {
+	public void should_return_a_set_with_paths_getPathsByHTMLPage() throws Exception {
+		when(restTemplate.getForObject(new URL(gitHubUrlWithPath).toURI(), String.class)).thenReturn("String");
+
 		var page = service.getPathsByHTMLPage(gitHubUrlWithPath);
 
 		assertTrue(page instanceof Set);

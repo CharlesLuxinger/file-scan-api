@@ -3,6 +3,7 @@ package com.github.charlesluxinger.api.service;
 import com.github.charlesluxinger.api.model.DataByFileType;
 import com.github.charlesluxinger.api.model.GitRepositoryRequest;
 import com.github.charlesluxinger.api.util.NumberUtils;
+import com.github.charlesluxinger.api.validator.GitHubUrl;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -35,22 +36,23 @@ public class GitRepositoryServiceImpl implements GitRepositoryService {
 	private final NumberUtils numberUtils;
 
 	@Valid
-	@Cacheable(value = CACHE_NAME, key = "#repository.url")
-	public Set<DataByFileType> findAllFilesGroup(@Valid @NotNull final GitRepositoryRequest repository) {
-		log.info("Finding in: " + repository.getUrl());
+	@Cacheable(value = CACHE_NAME, key = "#repository")
+	public Set<DataByFileType> findAllFilesGroup(@GitHubUrl final String repository) {
+		log.info("Finding in: " + repository);
 
-		return getFilesDataGroup(repository.getUrl());
+		return getFilesDataGroup(repository);
 	}
 
 	protected Set<DataByFileType> getFilesDataGroup(final String url) {
 		filesDataGroup.newFilesDataGroupSet();
 
-		return getPathsFilesByRootDirectory(synchronizedSet(new HashSet<>()), url).parallelStream()
-																				  .map(url::concat)
-																				  .map(this::getDataByFileType)
-																				  .map(filesDataGroup::addFileGroup)
-																				  .flatMap(Set::stream)
-																				  .collect(Collectors.toSet());
+		return getPathsFilesByRootDirectory(synchronizedSet(new HashSet<>()), url)
+				.parallelStream()
+				.map(url::concat)
+				.map(this::getDataByFileType)
+				.map(filesDataGroup::addFileGroup)
+				.flatMap(Set::stream)
+				.collect(Collectors.toSet());
 	}
 
 	protected Set<String> getPathsFilesByRootDirectory(final Set<String> treeFiles, final String url) {

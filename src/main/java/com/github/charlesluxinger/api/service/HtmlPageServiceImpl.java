@@ -6,12 +6,15 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.constraints.NotBlank;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,6 +30,7 @@ import static com.github.charlesluxinger.api.model.UrlParts.TREE_PATH;
 public class HtmlPageServiceImpl implements HtmlPageService {
 
 	private final RegexPatternService regexService;
+	private final RestTemplate restTemplate;
 
 	public String getPath(@NotBlank final String url) {
 		return getUrl(url).getPath();
@@ -45,10 +49,10 @@ public class HtmlPageServiceImpl implements HtmlPageService {
 
 	public BufferedReader getHTMLPageByURL(@NotBlank final String url) {
 		try {
-			var conn = getUrl(url).openConnection();
-			return new BufferedReader(new InputStreamReader(conn.getInputStream()));
-		} catch (IOException e) {
-			throw new NotHTMLPageException("Some wrong with url: " + url, e);//TODO Catch Exception
+			var body = restTemplate.getForObject(getUrl(url).toURI(), String.class);
+			return new BufferedReader(new StringReader(body));
+		} catch (URISyntaxException e) {
+			throw new NotHTMLPageException(url, e);
 		}
 	}
 

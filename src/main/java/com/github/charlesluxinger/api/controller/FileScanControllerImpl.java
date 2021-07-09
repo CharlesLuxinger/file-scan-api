@@ -21,7 +21,7 @@ public class FileScanControllerImpl implements FileScanController{
 
 	@PostMapping(value = "/repository", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
 	public Set<DataByFileType> gitRepository(@Valid @RequestBody final GitRepositoryRequest repository) {
-		return gitRepositoryService.findAllFilesGroup(repository);
+		return gitRepositoryService.findAllFilesGroup(repository.getUrl());
 	}
 
 }

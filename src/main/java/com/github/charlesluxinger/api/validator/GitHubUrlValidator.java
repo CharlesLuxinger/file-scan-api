@@ -12,7 +12,7 @@ import static com.github.charlesluxinger.api.model.RegexPattern.GITHUB_URL_REGEX
 
 @Component
 @AllArgsConstructor
-public class GithubUrlValidator implements ConstraintValidator<GitHubUrl, String> {
+public class GitHubUrlValidator implements ConstraintValidator<GitHubUrl, String> {
 
     private final RegexPatternService regexService;
 

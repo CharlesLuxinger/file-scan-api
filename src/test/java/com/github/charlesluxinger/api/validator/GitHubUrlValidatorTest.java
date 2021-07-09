@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GitHubUrlValidatorTest {
 
-	private GithubUrlValidator validator;
+	private GitHubUrlValidator validator;
 
 	@BeforeEach
 	public void setUp() {
-		validator = new GithubUrlValidator(new RegexPatternServiceImpl());
+		validator = new GitHubUrlValidator(new RegexPatternServiceImpl());
 	}
 
 	@Test
